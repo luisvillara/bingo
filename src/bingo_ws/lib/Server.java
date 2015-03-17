@@ -18,6 +18,7 @@ public class Server extends Thread
 
     @Override
     public void run() {
+        WSFunctions.broadcastIPAddress();
         while(true){
             String messageStr = "";
             try {
@@ -28,7 +29,7 @@ public class Server extends Thread
             int server_port = 50008; //port that I’m using
             try {
                 DatagramSocket s = new DatagramSocket();
-                InetAddress local = InetAddress.getByName("192.168.0.255");//my broadcast ip
+                InetAddress local = InetAddress.getByName("127.255.255.255");//my broadcast ip
                 int msg_length = messageStr.length();
                 byte[] message = messageStr.getBytes();
                 DatagramPacket p = new DatagramPacket(message, msg_length, local, server_port);
