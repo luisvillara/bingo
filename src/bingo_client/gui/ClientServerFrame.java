@@ -4,6 +4,7 @@
  */
 package bingo_client.gui;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -101,8 +102,6 @@ public class ClientServerFrame extends JPanel {
 
         head_info_A.setPreferredSize(new java.awt.Dimension(400, 200));
 
-        head_info_A_type_label.setText("Servidor - 192.168.0.101");
-
         javax.swing.GroupLayout head_info_A_typeLayout = new javax.swing.GroupLayout(head_info_A_type);
         head_info_A_type.setLayout(head_info_A_typeLayout);
         head_info_A_typeLayout.setHorizontalGroup(
@@ -120,13 +119,13 @@ public class ClientServerFrame extends JPanel {
 
         head_info_A_status_count_label.setText("Conectados:");
 
-        head_info_A_status_count.setText("15");
+        head_info_A_status_count.setText("0");
 
         head_info_A_status_estado_label.setText("Estado del juego:");
 
-        head_info_A_status_estado.setText("Iniciado");
+        head_info_A_status_estado.setText("En espera...");
 
-        head_info_A_status_btn.setText("Conectado");
+        head_info_A_status_btn.setText("No conectado");
 
         javax.swing.GroupLayout head_info_A_statusLayout = new javax.swing.GroupLayout(head_info_A_status);
         head_info_A_status.setLayout(head_info_A_statusLayout);
@@ -384,6 +383,9 @@ public class ClientServerFrame extends JPanel {
 
         add(content_body_B);
     }
-    
+
+    public void setHead_info_A_type_label_text(String text) {
+        this.head_info_A_type_label.setText(text);
+    }
     
 }

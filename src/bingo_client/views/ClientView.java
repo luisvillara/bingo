@@ -33,15 +33,17 @@ public class ClientView extends SwingWorker<Void, Void> implements ClientFrameDe
     }
     
     public void client_server_view(){
-        System.out.println("Vista del servidor!");
-        this.delegate.did_client_server_view(this);
-        Server server = new Server();
+        // Inicializo al servidor
+        Server server = new Server(this.delegate);
+        // Va a anunciarse
         server.start();
+        // Empieza el hilo que escucha clientes
+        server.startServerDispatcher();
+        this.delegate.show_server_info(server, this.delegate.did_client_server_view(this));
     }
     
     public void client_client_view(){
-        System.out.println("Vista del cliente!");
-        Client client = new Client();
+        Client client = new Client(this.delegate.did_client_client_view(this));
         client.start();
     }
 
@@ -57,8 +59,8 @@ public class ClientView extends SwingWorker<Void, Void> implements ClientFrameDe
             client_client_view();
         }else if(option_value == 1){
             client_server_view();
+            this.delegate.remove_client_type_view();
         }
-        this.delegate.remove_client_type_view();
     }
     
 }

@@ -87,7 +87,8 @@ public class ServerDispatcher extends Thread
         try {
            while (true) {
                String message = getNextMessageFromQueue();
-               sendMessageToAllClients(message);
+               System.out.println(message);
+               //sendMessageToAllClients(message);
            }
         } catch (InterruptedException ie) {
            // Thread interrupted. Stop its execution

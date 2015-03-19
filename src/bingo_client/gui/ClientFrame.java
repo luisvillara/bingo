@@ -7,9 +7,11 @@ package bingo_client.gui;
 import bingo_client.bingo_client.Settings;
 import bingo_client.lib.ClientDelegate;
 import bingo_client.views.ClientView;
+import bingo_ws.lib.Server;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
@@ -124,7 +126,7 @@ public class ClientFrame extends JFrame implements ClientDelegate {
     }
 
     @Override
-    public void did_client_server_view(ClientView client_view) {
+    public ClientServerFrame did_client_server_view(ClientView client_view) {
         ClientServerFrame client_server_view = new ClientServerFrame(client_view);
         javax.swing.GroupLayout content_viewLayout = new javax.swing.GroupLayout(this.content_view);
         this.content_view.setLayout(content_viewLayout);
@@ -135,6 +137,23 @@ public class ClientFrame extends JFrame implements ClientDelegate {
                 content_viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(client_server_view, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE));
         content_viewRepaint();
+        return client_server_view;
+    }
+
+    @Override
+    public void show_server_info(Server server, ClientServerFrame client_server_frame) {
+        client_server_frame.setHead_info_A_type_label_text("Servidor: " + server.getMyIP());
+    }
+
+    @Override
+    public ClientConfDialog did_client_client_view(ClientView client_view) {
+        final ClientConfDialog client_conf_dialog = new ClientConfDialog(this);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                client_conf_dialog.setVisible(true);
+            }
+        });
+        return client_conf_dialog;
     }
     
 }
