@@ -5,12 +5,17 @@
 package bingo_client.gui;
 
 import bingo_client.bingo_client.Settings;
+import bingo_client.lib.ClientConfDialogDelegate;
 import bingo_client.lib.ClientDelegate;
+import bingo_client.resources.Panel;
 import bingo_client.views.ClientView;
-import bingo_ws.lib.Server;
+import bingo_client.views.client.Client;
+import bingo_client.views.server.Server;
+import bingo_client.views.server.ServerList;
 import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -22,7 +27,7 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
  */
 public class ClientFrame extends JFrame implements ClientDelegate {
     
-    private javax.swing.JPanel content_view;
+    private Panel content_view;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenu menu_file;
     private javax.swing.JMenuItem menu_file_close;
@@ -45,8 +50,8 @@ public class ClientFrame extends JFrame implements ClientDelegate {
     }
     
     public void initComponents(){
-        content_view = new javax.swing.JPanel();
-        content_view.setBackground(Color.white);
+        content_view = new Panel();
+        content_view.setBackgroundImage("/images/bingo_bg.jpg", 1);
         menu = new javax.swing.JMenuBar();
         menu_file = new javax.swing.JMenu();
         menu_file_close = new javax.swing.JMenuItem();
@@ -126,8 +131,9 @@ public class ClientFrame extends JFrame implements ClientDelegate {
     }
 
     @Override
-    public ClientServerFrame did_client_server_view(ClientView client_view) {
-        ClientServerFrame client_server_view = new ClientServerFrame(client_view);
+    public ClientContainerFrame did_client_server_view(ClientView client_view) {
+        ServerContent server_content = new ServerContent();
+        ClientContainerFrame client_server_view = new ClientContainerFrame(client_view, (JPanel)server_content);
         javax.swing.GroupLayout content_viewLayout = new javax.swing.GroupLayout(this.content_view);
         this.content_view.setLayout(content_viewLayout);
         content_viewLayout.setHorizontalGroup(
@@ -141,19 +147,55 @@ public class ClientFrame extends JFrame implements ClientDelegate {
     }
 
     @Override
-    public void show_server_info(Server server, ClientServerFrame client_server_frame) {
+    public void show_server_info(Server server, ClientContainerFrame client_server_frame) {
         client_server_frame.setHead_info_A_type_label_text("Servidor: " + server.getMyIP());
     }
 
     @Override
-    public ClientConfDialog did_client_client_view(ClientView client_view) {
-        final ClientConfDialog client_conf_dialog = new ClientConfDialog(this);
+    public ClientConfDialog did_client_client_conf_dialog_view(Client client) {
+        final ClientConfDialog client_conf_dialog = new ClientConfDialog(client, this);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 client_conf_dialog.setVisible(true);
             }
         });
         return client_conf_dialog;
+    }
+
+    @Override
+    public void set_server(ServerList server, ClientConfDialogDelegate client_conf_dialog_delegate) {
+        client_conf_dialog_delegate.set_server_client_conf_dialog(server);
+    }
+
+    @Override
+    public ClientContainerFrame did_client_client_view(Client client) {
+        ClientContent client_content = new ClientContent();
+        ClientContainerFrame client_client_view = new ClientContainerFrame(client, (JPanel)client_content);
+        javax.swing.GroupLayout content_viewLayout = new javax.swing.GroupLayout(this.content_view);
+        this.content_view.setLayout(content_viewLayout);
+        content_viewLayout.setHorizontalGroup(
+                content_viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(client_client_view, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+        content_viewLayout.setVerticalGroup(
+                content_viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(client_client_view, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE));
+        content_viewRepaint();
+        return client_client_view;
+    }
+
+    @Override
+    public void show_client_info(Client client, ClientContainerFrame client_server_frame) {
+        client_server_frame.setHead_info_A_type_label_text("Cliente: " + client.getMyIP());
+    }
+
+    @Override
+    public void update_console(String message, ClientContainerFrame client_server_frame) {
+        client_server_frame.setContent_body_B_historic_text(message);
+    }
+
+    @Override
+    public void update_clients_table(ClientsTable model, ClientContainerFrame client_server_frame) {
+        client_server_frame.set_table_model(model);
     }
     
 }

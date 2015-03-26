@@ -4,12 +4,13 @@
  */
 package bingo_client.lib;
 
-import bingo_ws.lib.ServerList;
+import bingo_client.views.server.ServerList;
 
 /**
  *
  * @author Luis
  */
 public interface ClientConfDialogDelegate {
-    public void set_server(ServerList server);
+    public void set_server_client_conf_dialog(ServerList server);
+    public void entrar_servidor(String username);
 }

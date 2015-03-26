@@ -58,8 +58,8 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
         head_info_B_bingo_1_label = new javax.swing.JLabel();
         content_head_bingo_numbers = new javax.swing.JPanel();
         content_body_A = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        bingos_scroll = new javax.swing.JScrollPane();
+        bingos_container = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -341,7 +341,7 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
 
         content_body_A.setPreferredSize(new java.awt.Dimension(800, 300));
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 4));
+        bingos_container.setLayout(new java.awt.GridLayout(2, 4));
 
         jPanel2.setPreferredSize(new java.awt.Dimension(160, 197));
 
@@ -356,7 +356,7 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
             .addGap(0, 197, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2);
+        bingos_container.add(jPanel2);
 
         jPanel3.setPreferredSize(new java.awt.Dimension(160, 197));
 
@@ -371,7 +371,7 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
             .addGap(0, 197, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel3);
+        bingos_container.add(jPanel3);
 
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 197));
 
@@ -386,7 +386,7 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
             .addGap(0, 197, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel4);
+        bingos_container.add(jPanel4);
 
         jPanel5.setPreferredSize(new java.awt.Dimension(160, 197));
 
@@ -401,7 +401,7 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
             .addGap(0, 197, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel5);
+        bingos_container.add(jPanel5);
 
         jPanel6.setPreferredSize(new java.awt.Dimension(160, 197));
 
@@ -416,7 +416,7 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
             .addGap(0, 197, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel6);
+        bingos_container.add(jPanel6);
 
         jPanel7.setPreferredSize(new java.awt.Dimension(160, 197));
 
@@ -431,9 +431,9 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
             .addGap(0, 197, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel7);
+        bingos_container.add(jPanel7);
 
-        jScrollPane1.setViewportView(jPanel1);
+        bingos_scroll.setViewportView(bingos_container);
 
         javax.swing.GroupLayout content_body_ALayout = new javax.swing.GroupLayout(content_body_A);
         content_body_A.setLayout(content_body_ALayout);
@@ -441,14 +441,14 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
             content_body_ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(content_body_ALayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+                .addComponent(bingos_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
                 .addContainerGap())
         );
         content_body_ALayout.setVerticalGroup(
             content_body_ALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(content_body_ALayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addComponent(bingos_scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -458,6 +458,7 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
 
         content_body_B_historic.setColumns(20);
         content_body_B_historic.setRows(5);
+        content_body_B_historic.setMargin(new java.awt.Insets(5, 5, 5, 5));
         content_body_B_historic_scrollPane.setViewportView(content_body_B_historic);
 
         javax.swing.GroupLayout content_body_BLayout = new javax.swing.GroupLayout(content_body_B);
@@ -553,6 +554,8 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bingos_container;
+    private javax.swing.JScrollPane bingos_scroll;
     private javax.swing.JPanel content_body_A;
     private javax.swing.JPanel content_body_B;
     private javax.swing.JTextArea content_body_B_historic;
@@ -588,14 +591,12 @@ public class ClientFrameDesign_Client extends javax.swing.JFrame {
     private javax.swing.JLabel head_info_B_bingo_porllamar_label;
     private javax.swing.JPanel head_info_B_bingo_stats;
     private javax.swing.JPanel head_info_B_bingo_top;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenu menu_file;
     private javax.swing.JMenuItem menu_file_close;
