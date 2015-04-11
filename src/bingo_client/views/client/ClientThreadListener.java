@@ -40,9 +40,11 @@ public class ClientThreadListener extends Thread {
     @Override
     public void run() {
         try {
+            System.out.println("Creo el socket");
             socket = new Socket(this.serverIp, Settings.TCP_SERVER_PORT);
             serverInfo = new ServerInfo();
             serverInfo.mSocket = socket;
+            System.out.println("Inicializa los escuchadores");
             ServerListener serverListener = new ServerListener(serverInfo, this.clientDispatcher);
             ServerSender serverSender = new ServerSender(serverInfo, this.clientDispatcher);
             serverInfo.mClientListener = serverListener;
@@ -52,10 +54,7 @@ public class ClientThreadListener extends Thread {
             this.clientDispatcher.addServer(serverInfo);
             System.out.println("Se iniciaron todos los hilos");
             // Primer mensaje (100)
-            Json mensaje = new Json();
-            mensaje.set_entry_string("IP", this.client.getMyIP());
-            mensaje.set_entry_string("Cliente", this.client.getUsername());
-            serverSender.sendMessage(mensaje.create(100));
+            serverSender.sendMessage(Settings.M_100_C(this.client.getMyIP(), this.client.getUsername()).create(100));
 
         } catch (UnknownHostException ex) {
             Logger.getLogger(ClientThreadListener.class.getName()).log(Level.SEVERE, null, ex);

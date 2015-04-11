@@ -74,7 +74,7 @@ public class Client extends Thread implements ClientConfDialogDelegate , ServerD
                 ServerList server = new ServerList(p.getAddress());
                 System.out.println(new String(p.getData()));
                 JSONObject ser = new JSONObject(new String(p.getData()));
-                server.setNombre(ser.getString("Sala"));
+                server.setNombre(ser.getString("SALA"));
                 addServer(server);
                 text = new String(message, 0, p.getLength());
                 s.close();
@@ -86,7 +86,7 @@ public class Client extends Thread implements ClientConfDialogDelegate , ServerD
     
     public void addServer(ServerList server){
         if(!serversIP.contains(server)){
-            System.out.println("Agrego un nuevo servidor!");
+            System.out.println("Agrego un nuevo servidor: " + server.getNombre());
             serversIP.add(server);
             this.delegate.set_server(server, this.client_conf_dialog);
         }
@@ -118,6 +118,18 @@ public class Client extends Thread implements ClientConfDialogDelegate , ServerD
         this.username = username;
         connectingToServer();
     }
+    
+    public void joinMulticastGroup(){
+        try {
+            MulticastSocket socket = new MulticastSocket(Settings.UDP_MULTICAST_PORT);
+            InetAddress group = InetAddress.getByName(Settings.MULTICAST_IPADDRESS);
+            socket.joinGroup(group);
+            ClientMulticastThread client_multicast_thread = new ClientMulticastThread(socket);
+            client_multicast_thread.start();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public ServerList getServer() {
         return server;
@@ -147,10 +159,12 @@ public class Client extends Thread implements ClientConfDialogDelegate , ServerD
     public void process_message(String senderIP, JSONObject message, int code) {
         if(code == 101){
             try {
-                System.out.println("ID del juego es " + message.getString("IDJuego"));
+                System.out.println("ID del juego es " + message.getString("IDJUEGO"));
                 this.delegate.update_console(
                         senderIP + ": Ha entrado a un nuevo juego",
                         this.container_frame);
+                // Me uno al grupo Multicast
+                joinMulticastGroup();
                 JPanel panel = new JPanel();
                 JLabel label = new JLabel("Nro. Cartones:");
                 JTextField pass = new JTextField();
@@ -180,7 +194,7 @@ public class Client extends Thread implements ClientConfDialogDelegate , ServerD
                 String cartones = pass.getText();
                 Json mensaje = new Json();
                 mensaje.set_entry_int("NroCartones", Integer.parseInt(cartones));
-                clientThreadListener.send_message(mensaje.create(102));
+                clientThreadListener.send_message(Settings.M_102_C(Integer.parseInt(cartones)).create(102));
             } catch (JSONException ex) {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -25,6 +25,7 @@ public class ClientFrameDesign_Server extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         content_view = new javax.swing.JPanel();
         content_head = new javax.swing.JPanel();
@@ -313,7 +314,7 @@ public class ClientFrameDesign_Server extends javax.swing.JFrame {
             head_info_BLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(head_info_BLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(head_info_B_bingo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(head_info_B_bingo, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                 .addContainerGap())
         );
         head_info_BLayout.setVerticalGroup(
@@ -335,22 +336,17 @@ public class ClientFrameDesign_Server extends javax.swing.JFrame {
 
         content_body_A.setPreferredSize(new java.awt.Dimension(800, 300));
 
-        content_body_A_table.setForeground(new java.awt.Color(255, 255, 255));
         content_body_A_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"s", "s", "d"},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        content_body_A_table.setGridColor(new java.awt.Color(255, 102, 255));
-        content_body_A_table.setRowHeight(25);
-        content_body_A_table.setRowMargin(5);
-        content_body_A_table.setShowVerticalLines(false);
         content_body_A_table_scrollPane.setViewportView(content_body_A_table);
 
         javax.swing.GroupLayout content_body_ALayout = new javax.swing.GroupLayout(content_body_A);

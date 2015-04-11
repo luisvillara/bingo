@@ -4,7 +4,6 @@
  */
 package bingo_client.gui;
 
-import bingo_client.resources.Button;
 import java.awt.Color;
 import javax.swing.JPanel;
 
@@ -14,19 +13,18 @@ import javax.swing.JPanel;
  */
 public class ClientTypeContent extends JPanel {
     private ClientFrameDelegate delegate;
-    private Button client_type_btn;
+    private javax.swing.JButton client_type_btn;
     private javax.swing.JComboBox client_type_select;
 
     public ClientTypeContent(ClientFrameDelegate delegate) {
         this.delegate = delegate;
-        this.setOpaque(false);
         initComponents();
     }
     
     public void initComponents(){
         setBackground(Color.white);
         client_type_select = new javax.swing.JComboBox();
-        client_type_btn = new Button(0x58cb3d,0x37ad42,0x288e31,0xffffff);
+        client_type_btn = new javax.swing.JButton();
         client_type_select.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Cliente", "Servidor"}));
         client_type_btn.setText("Seleccionar");
         client_type_btn.addActionListener(new java.awt.event.ActionListener() {

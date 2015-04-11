@@ -9,6 +9,8 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +22,7 @@ public class ClientSender extends Thread
  
     private ServerDispatcher mServerDispatcher;
     private ClientInfo mClientInfo;
-    private PrintWriter mOut;
+    private OutputStreamWriter mOut;
  
     public ClientSender(ClientInfo aClientInfo, ServerDispatcher aServerDispatcher)
     throws IOException
@@ -28,7 +30,7 @@ public class ClientSender extends Thread
         mClientInfo = aClientInfo;
         mServerDispatcher = aServerDispatcher;
         Socket socket = aClientInfo.mSocket;
-        mOut = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+        mOut = new OutputStreamWriter(socket.getOutputStream());
     }
  
     /**
@@ -61,8 +63,13 @@ public class ClientSender extends Thread
      */
     private void sendMessageToClient(String aMessage)
     {
-        mOut.println(aMessage);
-        mOut.flush();
+        try {
+            mOut.write(aMessage);
+            mOut.flush();
+            System.out.println("Mensaje que envie: " + aMessage);
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
  
     /**

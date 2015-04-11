@@ -6,7 +6,6 @@ package bingo_ws.lib;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -30,21 +29,8 @@ public class Json {
     public void set_entry_array(String key, ArrayList value){
        message.put(key,value);
     }
-    public void set_entry_array(String key, JSONArray value){
-       message.put(key,value);
-    }
-    public String create(int code){
-        this.set_entry_int("COD", code);
+    public String create(boolean security){
         JSONObject message = new JSONObject(this.message);
         return message.toString();
     }
-
-    public HashMap getMessage() {
-        return message;
-    }
-
-    public void setMessage(HashMap message) {
-        this.message = message;
-    }
-    
 }

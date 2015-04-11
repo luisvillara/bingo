@@ -2,18 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bingo_client.views.server;
+package bingo_ws.lib;
 
-import bingo_client.gui.ClientFrameDelegate;
-import bingo_ws.lib.ServerDelegate;
-import bingo_ws.views.Request;
 import java.net.Socket;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  *
@@ -22,14 +14,7 @@ import org.json.JSONObject;
 public class ServerDispatcher extends Thread
 {
     private Vector mMessageQueue = new Vector();
-    private String senderIP;
     private Vector mClients = new Vector();
-    
-    private ServerDelegate delegate;
-    
-    public ServerDispatcher(ServerDelegate delegate){
-        this.delegate = delegate;
-    }
  
     /**
      * Adds given client to the server's client list.
@@ -59,9 +44,9 @@ public class ServerDispatcher extends Thread
     public synchronized void dispatchMessage(ClientInfo aClientInfo, String aMessage)
     {
         Socket socket = aClientInfo.mSocket;
-        senderIP = socket.getInetAddress().getHostAddress();
+        String senderIP = socket.getInetAddress().getHostAddress();
         String senderPort = "" + socket.getPort();
-        //aMessage = senderIP + ":" + senderPort + " : " + aMessage;
+        aMessage = senderIP + ":" + senderPort + " : " + aMessage;
         mMessageQueue.add(aMessage);
         notify();
     }
@@ -102,15 +87,10 @@ public class ServerDispatcher extends Thread
         try {
            while (true) {
                String message = getNextMessageFromQueue();
-               System.out.println("MENSAJEEEEEE%%%%%%%%%%%" + message);
-               JSONObject msg = new JSONObject(message);
-               this.delegate.process_message(senderIP, msg, msg.getInt("COD"));
+               sendMessageToAllClients(message);
            }
         } catch (InterruptedException ie) {
            // Thread interrupted. Stop its execution
-        } catch (JSONException ex) {
-            Logger.getLogger(ServerDispatcher.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error al leer mensaje JSON", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
  

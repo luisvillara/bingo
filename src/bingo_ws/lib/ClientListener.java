@@ -2,11 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bingo_client.views.server;
+package bingo_ws.lib;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
@@ -18,7 +17,7 @@ public class ClientListener extends Thread
 {
     private ServerDispatcher mServerDispatcher;
     private ClientInfo mClientInfo;
-    private InputStream mIn;
+    private BufferedReader mIn;
  
     public ClientListener(ClientInfo aClientInfo, ServerDispatcher aServerDispatcher)
     throws IOException
@@ -26,7 +25,7 @@ public class ClientListener extends Thread
         mClientInfo = aClientInfo;
         mServerDispatcher = aServerDispatcher;
         Socket socket = aClientInfo.mSocket;
-        mIn = socket.getInputStream();
+        mIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
  
     /**
@@ -37,15 +36,9 @@ public class ClientListener extends Thread
     {
         try {
            while (!isInterrupted()) {
-               byte[] msg = new byte[1024];
-               mIn.read(msg);
-               String message = new String(msg);
-               if (message == null) {
-                   break;
-               }
-               /*String message = mIn.readLine();
+               String message = mIn.readLine();
                if (message == null)
-                   break;*/
+                   break;
                mServerDispatcher.dispatchMessage(mClientInfo, message);
            }
         } catch (IOException ioex) {
