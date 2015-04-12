@@ -102,7 +102,7 @@ public class ServerDispatcher extends Thread
         try {
            while (true) {
                String message = getNextMessageFromQueue();
-               System.out.println("MENSAJEEEEEE%%%%%%%%%%%" + message);
+               System.out.println(message);
                JSONObject msg = new JSONObject(message);
                this.delegate.process_message(senderIP, msg, msg.getInt("COD"));
            }

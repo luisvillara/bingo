@@ -6,7 +6,6 @@ package bingo_client.views.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import javax.swing.JOptionPane;
@@ -19,7 +18,7 @@ public class ServerListener extends Thread
 {
     private ClientDispatcher mClientDispatcher;
     private ServerInfo mServerInfo;
-    private InputStream mIn;
+    private BufferedReader mIn;
  
     public ServerListener(ServerInfo aServerInfo, ClientDispatcher aClientDispatcher)
     throws IOException
@@ -27,7 +26,7 @@ public class ServerListener extends Thread
         mServerInfo = aServerInfo;
         mClientDispatcher = aClientDispatcher;
         Socket socket = aServerInfo.mSocket;
-        mIn = socket.getInputStream();
+        mIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         
     }
  
@@ -39,9 +38,7 @@ public class ServerListener extends Thread
     {
         try {
            while (!isInterrupted()) {
-               byte[] msg = new byte[1024];
-               mIn.read(msg);
-               String message = new String(msg);
+               String message = mIn.readLine();
                if (message == null)
                    break;
                mClientDispatcher.dispatchMessage(mServerInfo, message);

@@ -35,8 +35,6 @@ public class Server extends Thread implements ServerDelegate
     
     private ClientContainerFrame container_frame;
     
-    private MulticastSocket msocket;
-    
     public Server(ClientView client_view){
         this.client_view = client_view;
         this.delegate = client_view.getDelegate();
@@ -55,7 +53,10 @@ public class Server extends Thread implements ServerDelegate
             try {
                 DatagramSocket s = new DatagramSocket();
                 InetAddress local = InetAddress.getByName(Settings.BROADCAST_IPADDRESS);//my broadcast ip
-                String msg = Settings.M_105_S(this.getMyIP(), "Luis V.").create(105);
+                Json mensaje = new Json();
+                mensaje.set_entry_string("IP", this.getMyIP());
+                mensaje.set_entry_string("SALA", "Luis V.");
+                String msg = mensaje.create(105);
                 int msg_length = msg.length();
                 byte[] message = msg.getBytes();
                 DatagramPacket p = new DatagramPacket(message, msg_length, local, Settings.UDP_SERVER_PORT);
@@ -68,19 +69,6 @@ public class Server extends Thread implements ServerDelegate
             } catch (InterruptedException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-    }
-    
-    public void initMulticastGroup(){
-        try {
-            InetAddress group = InetAddress.getByName(Settings.MULTICAST_IPADDRESS);
-            msocket = new MulticastSocket(Settings.UDP_MULTICAST_PORT);
-            //socket.send(packg);
-            System.out.println("Inicializo el grupo multicast");
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -114,7 +102,7 @@ public class Server extends Thread implements ServerDelegate
         if(code == Settings.CODE_100){
             String username = "";
             try {
-                username = message.getString("CLIENTE");
+                username = message.getString("Cliente");
                 this.delegate.update_console(
                         senderIP + ": Conexión establecida con el cliente " + username,
                         this.container_frame);
@@ -127,28 +115,22 @@ public class Server extends Thread implements ServerDelegate
             clients_table.setData(clients);
             this.delegate.update_clients_table(clients_table, container_frame);
             // Conexión
-            serverListener.send_message(Settings.M_101_S(MD5.MD5(this.getMyIP())).create(101));
-            try {
-                InetAddress group = InetAddress.getByName(Settings.MULTICAST_IPADDRESS);
-                DatagramPacket packg = new DatagramPacket("hola".getBytes(), "hola".length(), group, Settings.UDP_MULTICAST_PORT);
-                msocket.send(packg);
-            } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Json mensaje = new Json();
+            mensaje.set_entry_string("IDJUEGO", MD5.MD5("2"));
+            serverListener.send_message(mensaje.create(101));
         }
         if(code == 102){
             try {
                 // Conexión
-                int cant_cartones = message.getInt("NROCARTONES");
+                int cant_cartones = message.getInt("NroCartones");
                 this.delegate.update_console(
                     senderIP + ": El cliente pidió " + cant_cartones + " carton(es)",
                     this.container_frame);
                 Json mensaje = new Json();
                 JSONArray cartones = new JSONArray();
-                int checksum;
                 for(int i = 0; i < cant_cartones; i++){
-                    checksum = 0;
                     Json carton = new Json();
+                    carton.set_entry_string("IDCarton", MD5.MD5(Integer.toString(i)));
                     int[][] board = new int[5][5];
                     ArrayList<Integer> list = new ArrayList<Integer>();
                     int number = 0;
@@ -170,7 +152,6 @@ public class Server extends Thread implements ServerDelegate
                         //Add elements to the array.
                         int j = 0;
                         for (int h : list) {
-                            checksum = checksum + h;
                             board[index][j++] = h;
                         }
 
@@ -181,15 +162,12 @@ public class Server extends Thread implements ServerDelegate
                         col++;
                     }
                     board[2][2] = 0;
-                    System.out.println("CHECKSUM DEL CARTON: " + Integer.toString(checksum));
-                    carton.set_entry_string("IDCARTON", MD5.MD5(Integer.toString(checksum)));
                     JSONArray numeros = new JSONArray(board);
-                    carton.set_entry_array("NUMEROS", numeros);
-                    serverListener.send_message(carton.create(103));
-                    //cartones.put(carton.getMessage());
+                    carton.set_entry_array("Numeros", numeros);
+                    cartones.put(carton.getMessage());
                 }
-                //mensaje.set_entry_array("Cartones", cartones);
-                //serverListener.send_message(mensaje.create(103));
+                mensaje.set_entry_array("Cartones", cartones);
+                serverListener.send_message(mensaje.create(103));
             } catch (JSONException ex) {
                 Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }

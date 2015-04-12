@@ -1,19 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_client/bingo_client/Main.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_data/models/Carton.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/AppSocket.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/ServerSocketLib.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_client/bingo_client/Settings.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/ServerDispatcher.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/ClientInfo.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/ClientListener.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/ClientSender.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/Server.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/Client.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_client/views/ClientView.java</file>
-        <file>file:/C:/Users/Luis/Documents/NetBeansProjects/proyecto_bingo/src/bingo_ws/lib/Broadcast.java</file>
-    </open-files>
 </project-private>
